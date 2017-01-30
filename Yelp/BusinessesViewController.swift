@@ -126,15 +126,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     func updateSearchResults(for searchController: UISearchController) {
         //Do nothing since update in searchBarButtonClicked function.
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if businesses != nil {
-            return businesses!.count
-        } else {
-            return 0
-        }
-        
-    }
+  
    
     //Infinite Scroll Methods.
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -178,6 +170,16 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
 
     }
     
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if businesses != nil {
+            return businesses!.count
+        } else {
+            return 0
+        }
+        
+    }
+    
     @available(iOS 2.0, *)
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let tableCell = tableView.dequeueReusableCell(withIdentifier: "BusinessCell", for: indexPath) as! BusinessCell
@@ -186,6 +188,18 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         
         return tableCell
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == "toDetails"
+        {
+            let cell = sender as! BusinessCell
+            let dest = segue.destination as! DetailsViewController
+            dest.business = cell.business
+        }
+    }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
